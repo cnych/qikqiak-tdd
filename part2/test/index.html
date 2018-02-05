@@ -1,0 +1,823 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="本教程是一个关于Python微服务的实战教程，根据测试驱动开发(TDD)的指导思想，开发容器化的Python微服务应用，涉及TDD、Flask、React、Docker、微服务等知识点。">
+      
+      
+        <link rel="canonical" href="https://tdd.qikqiak.com/part2/test/">
+      
+      
+        <meta name="author" content="阳明">
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="jp">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.6.0">
+    
+    
+      
+        <title>React 测试 - Python微服务实战</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.aa3de92b.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.792431c1.css">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono">
+        <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <a href="#_1" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://tdd.qikqiak.com/" title="Python微服务实战" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                Python微服务实战
+              </span>
+              <span class="md-header-nav__topic">
+                React 测试
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    <span class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </span>
+    Python微服务实战
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="首页" class="md-nav__link">
+      首页
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      第一部分
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        第一部分
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part1/introduction/" title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part1/start/" title="开始" class="md-nav__link">
+      开始
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part1/docker/" title="Docker 配置" class="md-nav__link">
+      Docker 配置
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part1/database/" title="数据库安装配置" class="md-nav__link">
+      数据库安装配置
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part1/test/" title="测试" class="md-nav__link">
+      测试
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part1/flask-blueprint/" title="Flask Blueprint" class="md-nav__link">
+      Flask Blueprint
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part1/deploy/" title="部署" class="md-nav__link">
+      部署
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part1/jinjia/" title="Jinjia 模板" class="md-nav__link">
+      Jinjia 模板
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      第二部分
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        第二部分
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../introduction/" title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../coverage/" title="代码覆盖" class="md-nav__link">
+      代码覆盖
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../lint/" title="代码质量" class="md-nav__link">
+      代码质量
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ci/" title="持续集成" class="md-nav__link">
+      持续集成
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../react/" title="React 应用" class="md-nav__link">
+      React 应用
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        React 测试
+      </label>
+    
+    <a href="./" title="React 测试" class="md-nav__link md-nav__link--active">
+      React 测试
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="组件测试" class="md-nav__link">
+    组件测试
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="快照测试" class="md-nav__link">
+    快照测试
+  </a>
+  
+</li>
+      
+      
+      
+        <li class="md-nav__item">
+          <a href="#__comments" title="评论" class="md-nav__link md-nav__link--active">
+            评论
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../form/" title="React 表单" class="md-nav__link">
+      React 表单
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../docker/" title="容器化 React 应用" class="md-nav__link">
+      容器化 React 应用
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      第三部分
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        第三部分
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part3/introduction/" title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../about/" title="关于" class="md-nav__link">
+      关于
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="组件测试" class="md-nav__link">
+    组件测试
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="快照测试" class="md-nav__link">
+    快照测试
+  </a>
+  
+</li>
+      
+      
+      
+        <li class="md-nav__item">
+          <a href="#__comments" title="评论" class="md-nav__link md-nav__link--active">
+            评论
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>React 测试</h1>
+                
+                <p>在了解上面的一些<code>React</code>基本概念过后，我们就可以来使用<code>TDD</code>的思想来进行我们开发了。</p>
+<p><code>Create React App</code>默认使用<a href="https://facebook.github.io/jest/">Jest</a>进行测试，所以你需要先安装<a href="https://www.npmjs.com/package/jest-cli">jest-cli</a>，进入到<code>client</code>根目录：</p>
+<div class="codehilite"><pre><span></span>$ npm install jest-cli@20.0.4 --save-dev
+</pre></div>
+
+
+<blockquote>
+<p>在安装的时候最后和我这里的版本保持一致，因为其他的版本可能会有其他问题，就需要自己去踩坑了哦~~~</p>
+</blockquote>
+<p>另外我们还需要使用<a href="https://github.com/airbnb/enzyme">Enzyme</a> - Airbnb出品的一个专门用于测试<code>React</code>组件的非常好用的库，同样的安装<code>Enzyme</code>：</p>
+<div class="codehilite"><pre><span></span>$ npm install --save-dev enzyme@3.1.0 enzyme-adapter-react-16@1.0.2
+</pre></div>
+
+
+<p>为了让<code>Enzyme</code>配置<code>React 16</code>的adapter，在<strong>src</strong>目录下面新增一个<code>setupTests.js</code>的文件：</p>
+<div class="codehilite"><pre><span></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">configure</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;enzyme&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">Adapter</span> <span class="nx">from</span> <span class="s1">&#39;enzyme-adapter-react-16&#39;</span><span class="p">;</span>
+
+<span class="nx">configure</span><span class="p">({</span><span class="nx">adapter</span><span class="o">:</span> <span class="k">new</span> <span class="nx">Adapter</span><span class="p">()});</span>
+</pre></div>
+
+
+<blockquote>
+<p>关于<code>Enzyme</code>的更多用法，可以前往<a href="http://airbnb.io/enzyme/#installation">官方文档</a>查看。</p>
+</blockquote>
+<p>配置完成后，就可以运行测试命令了：</p>
+<div class="codehilite"><pre><span></span>$ npm <span class="nb">test</span>
+No tests found related to files changed since last commit.
+</pre></div>
+
+
+<p>默认上面的测试命令运行在<code>watch</code>模式下面，所以你每次更改了代码后都会重新执行一遍。</p>
+<p>112/5000
+与Jest一起，我们将使用Enzyme，一个专门用于测试React组件的梦幻般的实用程序库。</p>
+<h3 id="_1">组件测试<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>在<code>components</code>文件夹下面新建文件<strong>UserList.test.js</strong>：</p>
+<div class="codehilite"><pre><span></span><span class="kr">import</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">shallow</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;enzyme&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">UserList</span> <span class="nx">from</span> <span class="s1">&#39;./UserList&#39;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">users</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;active&#39;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="s1">&#39;email&#39;</span><span class="o">:</span> <span class="s1">&#39;icnych@gmail.com&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;id&#39;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">&#39;username&#39;</span><span class="o">:</span> <span class="s1">&#39;cnych&#39;</span>
+    <span class="p">},</span> <span class="p">{</span>
+        <span class="s1">&#39;active&#39;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="s1">&#39;email&#39;</span><span class="o">:</span> <span class="s1">&#39;qikqiak@gmail.com&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;id&#39;</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s1">&#39;username&#39;</span><span class="o">:</span> <span class="s1">&#39;qikqiak&#39;</span>
+    <span class="p">}</span>
+<span class="p">];</span>
+
+<span class="nx">test</span><span class="p">(</span><span class="s1">&#39;UserList renders property&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">wrapper</span> <span class="o">=</span> <span class="nx">shallow</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">UserList</span> <span class="nx">users</span><span class="o">=</span><span class="p">{</span><span class="nx">users</span><span class="p">}</span> <span class="o">/&gt;</span><span class="p">);</span>
+    <span class="kr">const</span> <span class="nx">element</span> <span class="o">=</span> <span class="nx">wrapper</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;h4&#39;</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">element</span><span class="p">.</span><span class="nx">length</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">element</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nx">props</span><span class="p">.</span><span class="nx">className</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;well&#39;</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">element</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nx">props</span><span class="p">.</span><span class="nx">children</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;cnych&#39;</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>上面的测试代码中，我们使用了一个<strong>shallow</strong>的方法来创建<strong>UserList</strong>组件，然后我们就可以对它的输出进行断言测试了，使用<strong>shallow</strong>可以完全的隔离组件进行测试，这有助于子组件不会对测试结果产生影响。</p>
+<blockquote>
+<p>有关<code>shallow</code>的更多信息，以及组件渲染的其他方法，可以参阅<a href="https://stackoverflow.com/questions/38710309/when-should-you-use-render-and-shallow-in-enzyme-react-tests/38747914#38747914">StackOverflow 这篇文章</a>，当然你也可以到官网查看。</p>
+</blockquote>
+<p>然后继续运行测试，看是否正常通过：</p>
+<div class="codehilite"><pre><span></span>$ npm run <span class="nb">test</span>
+ PASS  src/components/UserList.test.js
+  ✓ UserList renders property <span class="o">(</span>11ms<span class="o">)</span>
+
+Test Suites: <span class="m">1</span> passed, <span class="m">1</span> total
+Tests:       <span class="m">1</span> passed, <span class="m">1</span> total
+Snapshots:   <span class="m">0</span> total
+Time:        <span class="m">2</span>.38s
+Ran all <span class="nb">test</span> suites related to changed files.
+</pre></div>
+
+
+<p>如果测试没通过，请检查下测试代码，已经测试依赖包的版本是否兼容。</p>
+<h3 id="_2">快照测试<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>上面的测试通过后，我们可以增加一个快照测试来保证<code>UI</code>界面不会改变。增加下面的代码到<code>UserList.test.js</code>文件中：</p>
+<div class="codehilite"><pre><span></span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;UserList renders a snapshot properly&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">tree</span> <span class="o">=</span> <span class="nx">renderer</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">UsersList</span> <span class="nx">users</span><span class="o">=</span><span class="p">{</span><span class="nx">users</span><span class="p">}</span><span class="o">/&gt;</span><span class="p">).</span><span class="nx">toJSON</span><span class="p">();</span>
+  <span class="nx">expect</span><span class="p">(</span><span class="nx">tree</span><span class="p">).</span><span class="nx">toMatchSnapshot</span><span class="p">();</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>记得在文件顶部导入<code>renderer</code>：</p>
+<div class="codehilite"><pre><span></span><span class="kr">import</span> <span class="nx">renderer</span> <span class="nx">from</span> <span class="s1">&#39;react-test-renderer&#39;</span><span class="p">;</span>
+</pre></div>
+
+
+<p>然后继续运行测试命令，在第一次测试运行时，会将组件输出的快照保存到<code>__snapshots__</code>文件夹中。 然后在以后的测试中，将新输出的快照与保存的快照进行比较，如果不同，则测试失败。</p>
+<p>由于测试在<code>watch</code>模式下，我们将<strong>UserList</strong>组件中的<strong>{user.username}</strong>更改为<strong>{user.email}</strong>，保存后触发新的测试，我们可以看到测试失败了：</p>
+<div class="codehilite"><pre><span></span>Snapshot Summary
+ › <span class="m">1</span> snapshot <span class="nb">test</span> failed in <span class="m">1</span> <span class="nb">test</span> suite. Inspect your code changes or press <span class="sb">`</span>u<span class="sb">`</span> to update them.
+
+Test Suites: <span class="m">1</span> failed, <span class="m">1</span> total
+Tests:       <span class="m">2</span> failed, <span class="m">2</span> total
+Snapshots:   <span class="m">1</span> failed, <span class="m">1</span> total
+Time:        <span class="m">1</span>.609s
+Ran all <span class="nb">test</span> suites related to changed files.
+</pre></div>
+
+
+<p>根据上面的提示，如果我们的目的就是要更改上面的组件，那么就需要更新快照，我们只需要输入<code>u</code>键即可：</p>
+<div class="codehilite"><pre><span></span>Watch Usage
+ › Press a to run all tests.
+ › Press u to update failing snapshots.
+ › Press p to filter by a filename regex pattern.
+ › Press t to filter by a <span class="nb">test</span> name regex pattern.
+ › Press q to quit watch mode.
+ › Press Enter to trigger a <span class="nb">test</span> run.
+</pre></div>
+
+
+<p>输入<code>u</code>键过后我们可以看到快照测试通过了，当然了我们还需要相应的更改上面组件测试中的期望值，确保测试通过后，将文件夹<code>__snapshots__</code>加入到<strong>.gitignore</strong>文件中，然后提交代码。</p>
+                
+                  
+                
+              
+              
+                
+                  <h2 id="__comments">评论</h2>
+                  <div id="disqus_thread"></div>
+<script>
+  var disqus_config = function () {
+    this.page.url = "https://tdd.qikqiak.com/part2/test/";
+    this.page.identifier =
+      "part2/test/";
+  };
+  (function() {
+    var d = document, s = d.createElement("script");
+    s.src = "//tddqik.disqus.com/embed.js";
+    s.setAttribute("data-timestamp", +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+                
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../react/" title="React 应用" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  后退
+                </span>
+                React 应用
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../form/" title="React 表单" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  前进
+                </span>
+                React 表单
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2017 - 2018 QikQiak LABS
+          </div>
+        
+        powered by
+        <a href="http://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+      <a href="https://github.com/cnych" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://twitter.com/cnych" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="https://facebook.com/cnych" class="md-footer-social__link fa fa-facebook"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.9fb73e57.js"></script>
+      
+        
+        
+          
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../assets/javascripts/lunr/lunr.jp.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"0.17.2",url:{base:"../.."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>

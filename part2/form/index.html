@@ -1,0 +1,1084 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="本教程是一个关于Python微服务的实战教程，根据测试驱动开发(TDD)的指导思想，开发容器化的Python微服务应用，涉及TDD、Flask、React、Docker、微服务等知识点。">
+      
+      
+        <link rel="canonical" href="https://tdd.qikqiak.com/part2/form/">
+      
+      
+        <meta name="author" content="阳明">
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="jp">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.6.0">
+    
+    
+      
+        <title>React 表单 - Python微服务实战</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.aa3de92b.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.792431c1.css">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono">
+        <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <a href="#_1" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://tdd.qikqiak.com/" title="Python微服务实战" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                Python微服务实战
+              </span>
+              <span class="md-header-nav__topic">
+                React 表单
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    <span class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </span>
+    Python微服务实战
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="首页" class="md-nav__link">
+      首页
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      第一部分
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        第一部分
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part1/introduction/" title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part1/start/" title="开始" class="md-nav__link">
+      开始
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part1/docker/" title="Docker 配置" class="md-nav__link">
+      Docker 配置
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part1/database/" title="数据库安装配置" class="md-nav__link">
+      数据库安装配置
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part1/test/" title="测试" class="md-nav__link">
+      测试
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part1/flask-blueprint/" title="Flask Blueprint" class="md-nav__link">
+      Flask Blueprint
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part1/deploy/" title="部署" class="md-nav__link">
+      部署
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part1/jinjia/" title="Jinjia 模板" class="md-nav__link">
+      Jinjia 模板
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      第二部分
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        第二部分
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../introduction/" title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../coverage/" title="代码覆盖" class="md-nav__link">
+      代码覆盖
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../lint/" title="代码质量" class="md-nav__link">
+      代码质量
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ci/" title="持续集成" class="md-nav__link">
+      持续集成
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../react/" title="React 应用" class="md-nav__link">
+      React 应用
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../test/" title="React 测试" class="md-nav__link">
+      React 测试
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        React 表单
+      </label>
+    
+    <a href="./" title="React 表单" class="md-nav__link md-nav__link--active">
+      React 表单
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="处理表单提交事件" class="md-nav__link">
+    处理表单提交事件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="获取用户输入" class="md-nav__link">
+    获取用户输入
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ajax" title="发送 AJAX 请求" class="md-nav__link">
+    发送 AJAX 请求
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="更新页面" class="md-nav__link">
+    更新页面
+  </a>
+  
+</li>
+      
+      
+      
+        <li class="md-nav__item">
+          <a href="#__comments" title="评论" class="md-nav__link md-nav__link--active">
+            评论
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../docker/" title="容器化 React 应用" class="md-nav__link">
+      容器化 React 应用
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      第三部分
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        第三部分
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part3/introduction/" title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../about/" title="关于" class="md-nav__link">
+      关于
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="处理表单提交事件" class="md-nav__link">
+    处理表单提交事件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="获取用户输入" class="md-nav__link">
+    获取用户输入
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ajax" title="发送 AJAX 请求" class="md-nav__link">
+    发送 AJAX 请求
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="更新页面" class="md-nav__link">
+    更新页面
+  </a>
+  
+</li>
+      
+      
+      
+        <li class="md-nav__item">
+          <a href="#__comments" title="评论" class="md-nav__link md-nav__link--active">
+            评论
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>React 表单</h1>
+                
+                <p>这一节，我们将创建一个添加用户的功能组件。在<code>client/src/components</code>目录下面添加两个新文件：</p>
+<ul>
+<li>AddUser.jsx</li>
+<li>AddUser.test.js</li>
+</ul>
+<p>添加测试代码：</p>
+<div class="codehilite"><pre><span></span><span class="kr">import</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">shallow</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;enzyme&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">renderer</span> <span class="nx">from</span> <span class="s1">&#39;react-test-renderer&#39;</span><span class="p">;</span>
+
+<span class="kr">import</span> <span class="nx">AddUser</span> <span class="nx">from</span> <span class="s1">&#39;./AddUser&#39;</span><span class="p">;</span>
+
+<span class="nx">test</span><span class="p">(</span><span class="s1">&#39;AddUser renders properly&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">wrapper</span> <span class="o">=</span> <span class="nx">shallow</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">AddUser</span> <span class="o">/&gt;</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="nx">element</span> <span class="o">=</span> <span class="nx">wrapper</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">);</span>
+  <span class="nx">expect</span><span class="p">(</span><span class="nx">element</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">).</span><span class="nx">length</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+  <span class="nx">expect</span><span class="p">(</span><span class="nx">element</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nx">props</span><span class="p">.</span><span class="nx">name</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">);</span>
+  <span class="nx">expect</span><span class="p">(</span><span class="nx">element</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nx">props</span><span class="p">.</span><span class="nx">name</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">);</span>
+  <span class="nx">expect</span><span class="p">(</span><span class="nx">element</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="nx">props</span><span class="p">.</span><span class="nx">name</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;submit&#39;</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>现在运行测试代码肯定会报错的，然后根据上面我们的测试代码，来编写<code>AddUser</code>组件代码：</p>
+<div class="codehilite"><pre><span></span><span class="kr">import</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">AddUser</span> <span class="o">=</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">form</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;form-group&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">input</span>
+          <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;username&quot;</span>
+          <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;form-control input-lg&quot;</span>
+          <span class="nx">placeholder</span><span class="o">=</span><span class="s2">&quot;Enter a username&quot;</span>
+          <span class="nx">required</span>
+        <span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="err">/div&gt;</span>
+      <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;form-group&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">input</span>
+          <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;email&quot;</span>
+          <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;form-control input-lg&quot;</span>
+          <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;email&quot;</span>
+          <span class="nx">placeholder</span><span class="o">=</span><span class="s2">&quot;Enter an email address&quot;</span>
+          <span class="nx">required</span>
+        <span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="err">/div&gt;</span>
+      <span class="o">&lt;</span><span class="nx">input</span>
+        <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;submit&quot;</span>
+        <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;btn btn-primary btn-lg btn-block&quot;</span>
+        <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;Submit&quot;</span>
+      <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="err">/form&gt;</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">AddUser</span><span class="p">;</span>
+</pre></div>
+
+
+<p>然后我们在<code>index.js</code>文件中引入<code>AddUser</code>组件：</p>
+<div class="codehilite"><pre><span></span>import AddUser from <span class="s1">&#39;./components/AddUser&#39;</span><span class="p">;</span>
+</pre></div>
+
+
+<p>然后在<strong>render()</strong>方法中增加组件：</p>
+<div class="codehilite"><pre><span></span><span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;container&quot;</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;row&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;col-md-6&quot;</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;</span>
+          <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">All</span> <span class="nx">Users</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+          <span class="o">&lt;</span><span class="nx">hr</span><span class="o">/&gt;&lt;</span><span class="nx">br</span><span class="o">/&gt;</span>
+          <span class="o">&lt;</span><span class="nx">AddUser</span><span class="o">/&gt;</span>
+          <span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;</span>
+          <span class="o">&lt;</span><span class="nx">UsersList</span> <span class="nx">users</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">users</span><span class="p">}</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="err">/div&gt;</span>
+      <span class="o">&lt;</span><span class="err">/div&gt;</span>
+    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+  <span class="p">)</span>
+<span class="p">};</span>
+</pre></div>
+
+
+<p>确保我们之前的后端服务是启动的状态：</p>
+<div class="codehilite"><pre><span></span>$ docker-compose -f docker-compose.yml up -d --build
+</pre></div>
+
+
+<p>然后定位到 client 目录下面，先导入我们的环境变量：</p>
+<div class="codehilite"><pre><span></span>$ <span class="nb">export</span> <span class="nv">REACT_APP_USERS_SERVICE_URL</span><span class="o">=</span>http://127.0.0.1:5001
+$ npm run start
+</pre></div>
+
+
+<p>然后在自动打开的浏览器中<code>http://localhost:3000/</code>应该能看到下面的界面：
+<img alt="index" src="../../img/posts/WX20180124-172026.png" />
+然后在<code>AddUser.test.js</code>文件中新增一个测试：</p>
+<div class="codehilite"><pre><span></span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;AddUser renders a snapshot properly&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">tree</span> <span class="o">=</span> <span class="nx">renderer</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">AddUser</span><span class="o">/&gt;</span><span class="p">).</span><span class="nx">toJSON</span><span class="p">();</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">tree</span><span class="p">).</span><span class="nx">toMatchSnapshot</span><span class="p">();</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>然后我们执行测试，确保测试能够正常通过</p>
+<div class="codehilite"><pre><span></span>$ npm run <span class="nb">test</span>
+</pre></div>
+
+
+<p>由于这是一个单页面应用程序，接下来我们希望在提交表单的时候阻止浏览器刷新页面，这样的用户体验会好很多的。要完成该功能需要以下4步：</p>
+<ul>
+<li>处理表单提交事件</li>
+<li>获取用户输入</li>
+<li>发送<code>AJAX</code>请求</li>
+<li>更新页面</li>
+</ul>
+<h3 id="_1">处理表单提交事件<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>为了让我们自己能够处理<code>submit</code>提交事件，只需要在<code>AddUser.jsx</code>文件中更新下<code>form</code>表单元素即可：</p>
+<div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">form</span> <span class="na">onSubmit</span><span class="o">=</span><span class="s">{(event)</span> <span class="err">=</span><span class="p">&gt;</span> event.preventDefault()}&gt;
+</pre></div>
+
+
+<p>大家记住<code>event.preventDefault()</code>这个方法，是用来阻止元素的默认处理事件的，以后肯定会用到的，然后我们随意输入一个用户名或邮件地址，然后尝试提交一次表单，我们可以看到页面没有任何反应，这正是我们所希望的，因为我们阻止了正常的事件行为。</p>
+<p>然后我们在<code>client/src/index.js</code>文件中，为<code>App</code>组件添加一个新的方法：</p>
+<div class="codehilite"><pre><span></span><span class="nx">addUser</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;sanity check!&#39;</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+
+
+<p>由于 AddUser 是一个函数组件，所以我们需要通过<code>props</code>来传递上面的添加方法，更新 render 方法下面的 AddUser 元素，如下所示：</p>
+<div class="codehilite"><pre><span></span><span class="o">&lt;</span><span class="nx">AddUser</span> <span class="nx">addUser</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">addUser</span><span class="p">}</span> <span class="o">/&gt;</span>
+</pre></div>
+
+
+<p>然后我们需要更新 App 组件的构造函数：</p>
+<div class="codehilite"><pre><span></span><span class="nx">constructor</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kr">super</span><span class="p">();</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="nx">users</span><span class="o">:</span> <span class="p">[]</span>
+    <span class="p">};</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">addUser</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">addUser</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>注意上面的<strong>bind</strong>方法，我们通过 bind 方法来手动绑定 this 的上下文。如果没有绑定的话，方法内的上下文是不正确的。</p>
+<blockquote>
+<p>关事件处理的更多信息，可以查看 React 关于事件处理的<a href="https://reactjs.org/docs/handling-events.html">官方文档</a>。</p>
+</blockquote>
+<p>没有它，这个方法内的上下文将不会有正确的上下文。 想要测试这个？ 只需将console.log（this）添加到addUser（），然后提交表单即可。 什么是上下文？ 删除绑定并再次测试。 现在的情况是什么？</p>
+<p>然后在更新<code>AddUser</code>组件中的 form 元素：</p>
+<div class="codehilite"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">onSubmit</span><span class="o">=</span><span class="p">{(</span><span class="nx">event</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">props</span><span class="p">.</span><span class="nx">addUser</span><span class="p">(</span><span class="nx">event</span><span class="p">)}</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>然后切换到浏览器中，随便输入用户名和邮件，点击提交按钮，在<code>JavaScript Console</code>终端（还记得怎么查看吗？）中可以看到<code>sanity check!</code>打印出来。</p>
+<h3 id="_2">获取用户输入<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>我们将使用<a href="https://reactjs.org/docs/forms.html#controlled-components">受控组件</a>来获取用户提交的数据。先增加两个新的属性在 App 组件的 state 对象上：</p>
+<div class="codehilite"><pre><span></span><span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">users</span><span class="o">:</span> <span class="p">[],</span>
+  <span class="nx">username</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+  <span class="nx">email</span><span class="o">:</span> <span class="s1">&#39;&#39;</span>
+<span class="p">};</span>
+</pre></div>
+
+
+<p>然后通过属性传递给 AddUser 组件：</p>
+<div class="codehilite"><pre><span></span><span class="o">&lt;</span><span class="nx">AddUser</span>
+  <span class="nx">username</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">username</span><span class="p">}</span>
+  <span class="nx">email</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">email</span><span class="p">}</span>
+  <span class="nx">addUser</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">addUser</span><span class="p">}</span>
+<span class="err">/&gt;</span>
+</pre></div>
+
+
+<p>现在我们在 AddUser 组件中就可以通过<code>props</code>来访问 username 和 email 了，更新 AddUser 组件：</p>
+<div class="codehilite"><pre><span></span><span class="kr">import</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">AddUser</span> <span class="o">=</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">form</span> <span class="nx">onSubmit</span><span class="o">=</span><span class="p">{(</span><span class="nx">event</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">props</span><span class="p">.</span><span class="nx">addUser</span><span class="p">(</span><span class="nx">event</span><span class="p">)}</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;form-group&quot;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">input</span>
+              <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;username&quot;</span>
+              <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;form-control input-lg&quot;</span>
+              <span class="nx">placeholder</span><span class="o">=</span><span class="s2">&quot;Enter a username&quot;</span>
+              <span class="nx">required</span>
+              <span class="nx">value</span><span class="o">=</span><span class="p">{</span><span class="nx">props</span><span class="p">.</span><span class="nx">username</span><span class="p">}</span>
+            <span class="o">/&gt;</span>
+          <span class="o">&lt;</span><span class="err">/div&gt;</span>
+          <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;form-group&quot;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">input</span>
+              <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;email&quot;</span>
+              <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;form-control input-lg&quot;</span>
+              <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;email&quot;</span>
+              <span class="nx">placeholder</span><span class="o">=</span><span class="s2">&quot;Enter an email address&quot;</span>
+              <span class="nx">required</span>
+              <span class="nx">value</span><span class="o">=</span><span class="p">{</span><span class="nx">props</span><span class="p">.</span><span class="nx">email</span><span class="p">}</span>
+            <span class="o">/&gt;</span>
+          <span class="o">&lt;</span><span class="err">/div&gt;</span>
+          <span class="o">&lt;</span><span class="nx">input</span>
+            <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;submit&quot;</span>
+            <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;btn btn-primary btn-lg btn-block&quot;</span>
+            <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;Submit&quot;</span>
+          <span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="err">/form&gt;</span>
+    <span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">AddUser</span><span class="p">;</span>
+</pre></div>
+
+
+<p>然后我们可以到浏览器中测试下，随意输入一些值，你会发现什么都不能输入，这是为什么呢？仔细看上面的 input 组件的 value 值，是通过<code>props</code>来获取的，而传递给该组件的值是通过父组件的 state 传递过来的，因为父组件的 state 对象中的 username 和 email 一直都是<strong>空字符串</strong>，所以我们这里的输入值没有任何效果。</p>
+<blockquote>
+<p>将父组件中的 state 对象中的 username 默认值更改成其他字符串，再看看效果呢?是不是和我们的分析是一致的。</p>
+</blockquote>
+<p>那么我们怎么来更新父组件中的状态值呢，这样当我们在输入框中输入文本的时候就可以看到变化了。</p>
+<p>首先，在 App 组件中新增一个<code>handleChange</code>的方法：</p>
+<div class="codehilite"><pre><span></span><span class="nx">handleChange</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+  <span class="kr">const</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{};</span>
+  <span class="nx">obj</span><span class="p">[</span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>然后同样的，在构造函数中添加一个 bind：</p>
+<div class="codehilite"><pre><span></span><span class="k">this</span><span class="p">.</span><span class="nx">handleChange</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">handleChange</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+</pre></div>
+
+
+<p>然后通过<code>props</code>将该方法传递给<code>AddUser</code>组件：</p>
+<div class="codehilite"><pre><span></span><span class="o">&lt;</span><span class="nx">AddUser</span>
+  <span class="nx">username</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">username</span><span class="p">}</span>
+  <span class="nx">email</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">email</span><span class="p">}</span>
+  <span class="nx">handleChange</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">handleChange</span><span class="p">}</span>
+  <span class="nx">addUser</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">addUser</span><span class="p">}</span>
+<span class="err">/&gt;</span>
+</pre></div>
+
+
+<p>然后，我们就需要更新 AddUser 组件了，我们监听 input 元素的 <code>onChange</code> 方法，当 input 元素发送改变的时候，就会触发该调用：</p>
+<div class="codehilite"><pre><span></span><span class="kr">import</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">AddUser</span> <span class="o">=</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">form</span> <span class="nx">onSubmit</span><span class="o">=</span><span class="p">{(</span><span class="nx">event</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">props</span><span class="p">.</span><span class="nx">addUser</span><span class="p">(</span><span class="nx">event</span><span class="p">)}</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;form-group&quot;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">input</span>
+              <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;username&quot;</span>
+              <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;form-control input-lg&quot;</span>
+              <span class="nx">placeholder</span><span class="o">=</span><span class="s2">&quot;Enter a username&quot;</span>
+              <span class="nx">required</span>
+              <span class="nx">value</span><span class="o">=</span><span class="p">{</span><span class="nx">props</span><span class="p">.</span><span class="nx">username</span><span class="p">}</span>
+              <span class="nx">onChange</span><span class="o">=</span><span class="p">{</span><span class="nx">props</span><span class="p">.</span><span class="nx">handleChange</span><span class="p">}</span>
+            <span class="o">/&gt;</span>
+          <span class="o">&lt;</span><span class="err">/div&gt;</span>
+          <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;form-group&quot;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">input</span>
+              <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;email&quot;</span>
+              <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;form-control input-lg&quot;</span>
+              <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;email&quot;</span>
+              <span class="nx">placeholder</span><span class="o">=</span><span class="s2">&quot;Enter an email address&quot;</span>
+              <span class="nx">required</span>
+              <span class="nx">value</span><span class="o">=</span><span class="p">{</span><span class="nx">props</span><span class="p">.</span><span class="nx">email</span><span class="p">}</span>
+              <span class="nx">onChange</span><span class="o">=</span><span class="p">{</span><span class="nx">props</span><span class="p">.</span><span class="nx">handleChange</span><span class="p">}</span>
+            <span class="o">/&gt;</span>
+          <span class="o">&lt;</span><span class="err">/div&gt;</span>
+          <span class="o">&lt;</span><span class="nx">input</span>
+            <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;submit&quot;</span>
+            <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;btn btn-primary btn-lg btn-block&quot;</span>
+            <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;Submit&quot;</span>
+          <span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="err">/form&gt;</span>
+    <span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">AddUser</span><span class="p">;</span>
+</pre></div>
+
+
+<p>现在我能在去浏览器中测试下，已经正常工作了。我们可以在 addUser 方法中打印下 state 对象的值，方便我们来了解 state 对象：</p>
+<div class="codehilite"><pre><span></span><span class="nx">addUser</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;sanity check!&#39;</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+
+
+<p>然后我们可以到浏览器中输入用户名和邮件，点击提交按钮，我们可以在浏览器的 Console 终端中看到如下的信息了：
+<img alt="index" src="../../img/posts/WX20180124-183550.png" /></p>
+<p>现在我们获得了输入的值，接下来我们就可以发送一个<code>AJAX</code>请求，将我们的输入添加到数据库中，然后更新 DOM 树...</p>
+<h3 id="ajax">发送 AJAX 请求<a class="headerlink" href="#ajax" title="Permanent link">&para;</a></h3>
+<p>还记得我们前面的 users-service 服务中的<code>add_user</code>方法吗（<code>project/api/views.py</code>文件下）？我们添加一个新的用户需要发送 username 和 email 两项数据：</p>
+<div class="codehilite"><pre><span></span><span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">User</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="n">email</span><span class="p">))</span>
+</pre></div>
+
+
+<p>现在我们在 React 代码中用<code>Axios</code>来发送添加用户的 POST 请求，修改<code>client/src/index.js</code>中 App 组件的<code>addUser</code>方法：</p>
+<div class="codehilite"><pre><span></span><span class="nx">addUser</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;sanity check!&#39;</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">username</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">username</span><span class="p">,</span>
+    <span class="nx">email</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">email</span>
+  <span class="p">};</span>
+  <span class="nx">axios</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">REACT_APP_USERS_SERVICE_URL</span><span class="si">}</span><span class="sb">/users`</span><span class="p">,</span> <span class="nx">data</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
+  <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>然后我们切换到浏览器中添加一条数据，只要输入的 email 地址是唯一的，测试应该都会通过的。如果我们连续点击提交两次，我们就可以看到在 Chrome 浏览器的终端中看到有一个<strong>400</strong>的错误码打印出来，因为我们第二次提交的 email 邮箱已经存在了，而我们前面的<code>users-service</code>服务在 email 存在的情况下会返回 400 状态码。
+<img alt="status400" src="../../img/posts/WX20180126-110951.png" /></p>
+<h3 id="_3">更新页面<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>最后当添加用户的表单提交成功后我们来更新用户列表，并且清空表单，同样更新<code>addUser</code>方法：</p>
+<div class="codehilite"><pre><span></span><span class="nx">addUser</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;sanity check!&#39;</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">username</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">username</span><span class="p">,</span>
+    <span class="nx">email</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">email</span>
+  <span class="p">};</span>
+  <span class="nx">axios</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">REACT_APP_USERS_SERVICE_URL</span><span class="si">}</span><span class="sb">/users`</span><span class="p">,</span> <span class="nx">data</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">getUsers</span><span class="p">();</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span> <span class="nx">username</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nx">email</span><span class="o">:</span> <span class="s1">&#39;&#39;</span> <span class="p">});</span>
+  <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>我们前面知道获取用户列表是通过<code>getUsers()</code>方法的，所以当我们添加用户的请求发送成功后，是不是重新请求下<code>getUsrs()</code>方法，是不是就能够把数据库中的所有用户获取到了啊？要清空表单该怎么做呢？当然是操作状态了，我们知道只需要更改 state 对象下的 username 和 email，对应的元素就会发送变化，我们不需要自己手动去更新 DOM 元素，只需要操作 state 就行，是不是很方便了啊？</p>
+<p>然后我们切换到浏览器中测试一下，添加一个唯一的邮箱，是不是提交完成后下面的列表也更新了，表单也清空了。然后我们可以运行下我们的测试代码：</p>
+<div class="codehilite"><pre><span></span>$ npm run <span class="nb">test</span>
+</pre></div>
+
+
+<p>我们会发现测试是没有通过的，出现下面的错误提示，这是因为我们的 UI 界面已经发生了改变，和之前我们的快照是不一样的，所以这个时候我们只需要输入<code>u</code>更新下快照即可。</p>
+<div class="codehilite"><pre><span></span>Snapshot Summary
+ › <span class="m">1</span> snapshot <span class="nb">test</span> failed in <span class="m">1</span> <span class="nb">test</span> suite. Inspect your code changes or press <span class="sb">`</span>u<span class="sb">`</span> to update them.
+</pre></div>
+
+
+<p>快照更新后，正常情况下测试代码都会通过的。如果有其他问题，请仔细查看下错误日志，仔细排查，然后提交代码到<code>github</code>。</p>
+                
+                  
+                
+              
+              
+                
+                  <h2 id="__comments">评论</h2>
+                  <div id="disqus_thread"></div>
+<script>
+  var disqus_config = function () {
+    this.page.url = "https://tdd.qikqiak.com/part2/form/";
+    this.page.identifier =
+      "part2/form/";
+  };
+  (function() {
+    var d = document, s = d.createElement("script");
+    s.src = "//tddqik.disqus.com/embed.js";
+    s.setAttribute("data-timestamp", +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+                
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../test/" title="React 测试" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  后退
+                </span>
+                React 测试
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../docker/" title="容器化 React 应用" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  前进
+                </span>
+                容器化 React 应用
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2017 - 2018 QikQiak LABS
+          </div>
+        
+        powered by
+        <a href="http://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+      <a href="https://github.com/cnych" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://twitter.com/cnych" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="https://facebook.com/cnych" class="md-footer-social__link fa fa-facebook"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.9fb73e57.js"></script>
+      
+        
+        
+          
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../assets/javascripts/lunr/lunr.jp.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"0.17.2",url:{base:"../.."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>

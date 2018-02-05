@@ -1,0 +1,1272 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="本教程是一个关于Python微服务的实战教程，根据测试驱动开发(TDD)的指导思想，开发容器化的Python微服务应用，涉及TDD、Flask、React、Docker、微服务等知识点。">
+      
+      
+        <link rel="canonical" href="https://tdd.qikqiak.com/part2/react/">
+      
+      
+        <meta name="author" content="阳明">
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="jp">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.6.0">
+    
+    
+      
+        <title>React 应用 - Python微服务实战</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.aa3de92b.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.792431c1.css">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono">
+        <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <a href="#_1" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://tdd.qikqiak.com/" title="Python微服务实战" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                Python微服务实战
+              </span>
+              <span class="md-header-nav__topic">
+                React 应用
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    <span class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </span>
+    Python微服务实战
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="首页" class="md-nav__link">
+      首页
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      第一部分
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        第一部分
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part1/introduction/" title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part1/start/" title="开始" class="md-nav__link">
+      开始
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part1/docker/" title="Docker 配置" class="md-nav__link">
+      Docker 配置
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part1/database/" title="数据库安装配置" class="md-nav__link">
+      数据库安装配置
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part1/test/" title="测试" class="md-nav__link">
+      测试
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part1/flask-blueprint/" title="Flask Blueprint" class="md-nav__link">
+      Flask Blueprint
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part1/deploy/" title="部署" class="md-nav__link">
+      部署
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part1/jinjia/" title="Jinjia 模板" class="md-nav__link">
+      Jinjia 模板
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      第二部分
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        第二部分
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../introduction/" title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../coverage/" title="代码覆盖" class="md-nav__link">
+      代码覆盖
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../lint/" title="代码质量" class="md-nav__link">
+      代码质量
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ci/" title="持续集成" class="md-nav__link">
+      持续集成
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        React 应用
+      </label>
+    
+    <a href="./" title="React 应用" class="md-nav__link md-nav__link--active">
+      React 应用
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="初始化项目" class="md-nav__link">
+    初始化项目
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="第一个组件" class="md-nav__link">
+    第一个组件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="基于类的组件" class="md-nav__link">
+    基于类的组件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ajax" title="AJAX请求" class="md-nav__link">
+    AJAX请求
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" title="组件声明周期" class="md-nav__link">
+    组件声明周期
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" title="挂载" class="md-nav__link">
+    挂载
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" title="更新" class="md-nav__link">
+    更新
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" title="卸载" class="md-nav__link">
+    卸载
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#state" title="State（状态）" class="md-nav__link">
+    State（状态）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" title="组件" class="md-nav__link">
+    组件
+  </a>
+  
+</li>
+      
+      
+      
+        <li class="md-nav__item">
+          <a href="#__comments" title="评论" class="md-nav__link md-nav__link--active">
+            评论
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../test/" title="React 测试" class="md-nav__link">
+      React 测试
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../form/" title="React 表单" class="md-nav__link">
+      React 表单
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../docker/" title="容器化 React 应用" class="md-nav__link">
+      容器化 React 应用
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      第三部分
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        第三部分
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part3/introduction/" title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../about/" title="关于" class="md-nav__link">
+      关于
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="初始化项目" class="md-nav__link">
+    初始化项目
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="第一个组件" class="md-nav__link">
+    第一个组件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="基于类的组件" class="md-nav__link">
+    基于类的组件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ajax" title="AJAX请求" class="md-nav__link">
+    AJAX请求
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" title="组件声明周期" class="md-nav__link">
+    组件声明周期
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" title="挂载" class="md-nav__link">
+    挂载
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" title="更新" class="md-nav__link">
+    更新
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" title="卸载" class="md-nav__link">
+    卸载
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#state" title="State（状态）" class="md-nav__link">
+    State（状态）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" title="组件" class="md-nav__link">
+    组件
+  </a>
+  
+</li>
+      
+      
+      
+        <li class="md-nav__item">
+          <a href="#__comments" title="评论" class="md-nav__link md-nav__link--active">
+            评论
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>React 应用</h1>
+                
+                <p><a href="https://reactjs.org">React</a>是一个声明式、基于组件的<code>javascript</code>库，可以非常轻松地创建用户交互界面。为你应用的每一个状态设计简洁的视图，在数据改变时<code>React</code>也可以高效地更新渲染界面。</p>
+<p>如果你还没接触过<code>React</code>的话，建议你先阅读<a href="https://reactjs.org/blog/2013/06/05/why-react.html">Why did we build React?</a>和<a href="https://reactjs.org/docs/hello-world.html">React 快速入门</a>两篇文章，当然我也建议你能学学<a href="http://babeljs.io/">Babel</a>和<a href="../../post/webpack3-get-started/">Webpack</a>的相关知识，这些知识点结合在一起可以非常完美的帮助你进行<code>React</code>应用的开发。</p>
+<p>首先确保你的系统中已经安装了<a href="https://nodejs.org/">Node</a>和<a href="https://www.npmjs.com/">NPM</a>：</p>
+<div class="codehilite"><pre><span></span>$ tdd100  node -v
+v8.5.0
+$ tdd100  npm -v
+<span class="m">5</span>.4.2
+</pre></div>
+
+
+<p>如果你没安装的话，根据上面两个连接你也可以非常方便的安装，这里就不详细说明了。</p>
+<h3 id="_1">初始化项目<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>这里我们使用一个非常牛逼的创建<code>React</code>项目的脚手架工具：<a href="https://github.com/facebookincubator/create-react-app">Create React App</a>。
+首先我们安装<code>Create React App</code>工具到全局环境中：</p>
+<div class="codehilite"><pre><span></span>$ npm install create-react-app --global
+</pre></div>
+
+
+<p>安装完成后，我们在我们的<code>flask-microservices-users</code>项目根目录下面创建一个新的文件夹：<code>client</code>，然后初始化我们的项目结构：</p>
+<div class="codehilite"><pre><span></span>$ mkdir client <span class="o">&amp;&amp;</span> <span class="nb">cd</span> client
+$ create-react-app .
+</pre></div>
+
+
+<p>项目结构创建完成后，相关的依赖包也已经安装好，完成后，我们可以启动服务：</p>
+<div class="codehilite"><pre><span></span>$ npm start
+</pre></div>
+
+
+<p>服务启动完成后，<code>Create React App</code>工具会自动用默认的浏览器打开：<a href="http://localhost:3000">http://localhost:3000</a>。
+<img alt="react-index" src="../../img/posts/react-index.png" /></p>
+<p>确保上面这些都正常后，关掉服务(Crtl + C)，为了简化我们的开发过程，我们可以通知<code>npm</code>不要为项目创建<code>package-lock.json</code>文件：</p>
+<div class="codehilite"><pre><span></span>$ <span class="nb">echo</span> <span class="s1">&#39;package-lock=false&#39;</span> &gt;&gt; .npmrc
+</pre></div>
+
+
+<ul>
+<li>可以通过文档<a href="https://docs.npmjs.com/files/npmrc">npm docs</a>查看关于配置文件<code>.npmrc</code>的更多信息。</li>
+<li>对<code>package-lock.json</code>文件不太清楚的，可以查看这篇文章:<a href="https://jpospisil.com/2017/06/02/understanding-lock-files-in-npm-5.html">Understanding lock files in NPM 5</a>进行了解。</li>
+</ul>
+<p>现在来开始创建创我们的第一个组件吧~~~</p>
+<h3 id="_2">第一个组件<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>为了让我们的项目结构看起来更加简单，我们移除<strong>src</strong>目录下面的<em>App.css</em>，<em>App.js</em>，<em>App.test.js</em>以及<em>index.css</em>文件，然后更新<em>index.js</em>文件：</p>
+<div class="codehilite"><pre><span></span><span class="kr">import</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">ReactDOM</span> <span class="nx">from</span> <span class="s1">&#39;react-dom&#39;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">App</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;container&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;row&quot;</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;col-md-4&quot;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">br</span> <span class="o">/&gt;</span>
+            <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">All</span> <span class="nx">Users</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+            <span class="o">&lt;</span><span class="nx">hr</span> <span class="o">/&gt;&lt;</span><span class="nx">br</span> <span class="o">/&gt;</span>
+          <span class="o">&lt;</span><span class="err">/div&gt;</span>
+        <span class="o">&lt;</span><span class="err">/div&gt;</span>
+      <span class="o">&lt;</span><span class="err">/div&gt;</span>
+    <span class="p">)</span>
+<span class="p">};</span>
+
+<span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+  <span class="o">&lt;</span><span class="nx">App</span> <span class="o">/&gt;</span><span class="p">,</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+
+
+<p>上面代码做了几件事：</p>
+<ul>
+<li>导入<code>React</code>和<code>ReactDom</code>类后，我们创建了一个叫<code>App</code>的函数，这是<code>ES6</code>里面的箭头函数的写法，然后该函数返回的是一个<a href="https://facebook.github.io/jsx/">JSX</a>格式的对象。</li>
+<li>我们用<code>ReactDOM</code>的<code>render</code>方法将我们的<code>App</code>组件挂载到了一个ID为<code>root</code>的<em>HTML</em>元素上。</li>
+</ul>
+<blockquote>
+<p>注意<code>public</code>目录下面的<code>index.html</code>文件的<code>&lt;div id="root"&gt;&lt;/div&gt;</code>，这就是被挂载的地方。另外对于还不太了解<code>ES6</code>的同学，不用担心，实际上是可以直接跳过<code>javascript</code>的语法，直接学习<code>ES6</code>的(虽然不太推荐这样)，<code>ES6</code>比原生的<code>javascript</code>更加系统、更加容易学习、也更加接近你所学习过的其他编程语言(<a href="http://babeljs.io/learn-es2015/">点击这里前去学习吧</a>)</p>
+</blockquote>
+<p>然后在<code>public</code>目录下的<strong>index.html</strong>文件的<strong>head</strong>区域添加<code>bootstrap</code>的<strong>css</strong>样式文件：</p>
+<div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css&quot;</span><span class="p">&gt;</span>
+</pre></div>
+
+
+<h3 id="_3">基于类的组件<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>现在我们来将我们的<code>App</code>组件更改成基于类的形式：</p>
+<div class="codehilite"><pre><span></span><span class="kr">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span><span class="nx">Component</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">ReactDOM</span> <span class="nx">from</span> <span class="s1">&#39;react-dom&#39;</span><span class="p">;</span>
+
+<span class="kr">class</span> <span class="nx">App</span> <span class="kr">extends</span> <span class="nx">Component</span> <span class="p">{</span>
+    <span class="nx">constructor</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kr">super</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span>
+          <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;container&quot;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;row&quot;</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;col-md-4&quot;</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="nx">br</span> <span class="o">/&gt;</span>
+                <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">All</span> <span class="nx">Users</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+                <span class="o">&lt;</span><span class="nx">hr</span> <span class="o">/&gt;&lt;</span><span class="nx">br</span> <span class="o">/&gt;</span>
+              <span class="o">&lt;</span><span class="err">/div&gt;</span>
+            <span class="o">&lt;</span><span class="err">/div&gt;</span>
+          <span class="o">&lt;</span><span class="err">/div&gt;</span>
+        <span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+  <span class="o">&lt;</span><span class="nx">App</span> <span class="o">/&gt;</span><span class="p">,</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+
+
+<p>然后我们执行<code>npm start</code>可以发现其实上面的基于类的组件和前面的函数组件，最后的输出都是一模一样的，我们在后面会慢慢发现二者之间的区别的。</p>
+<h3 id="ajax">AJAX请求<a class="headerlink" href="#ajax" title="Permanent link">&para;</a></h3>
+<p>为了连接客户端和服务端数据，我们在<code>App</code>类中增加一个<code>getUsers()</code>的方法，我们用一个非常流行的库：<a href="https://github.com/axios/axios">Axios</a>来进行网络请求：
+首先先安装<code>axios</code>包：</p>
+<div class="codehilite"><pre><span></span>$ npm install axios --save
+</pre></div>
+
+
+<p>然后在<code>App</code>类中添加<code>getUsers</code>函数：</p>
+<div class="codehilite"><pre><span></span><span class="kr">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span><span class="nx">Component</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">ReactDOM</span> <span class="nx">from</span> <span class="s1">&#39;react-dom&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">axios</span> <span class="nx">from</span> <span class="s1">&#39;axios&#39;</span><span class="p">;</span>
+
+<span class="kr">class</span> <span class="nx">App</span> <span class="kr">extends</span> <span class="nx">Component</span> <span class="p">{</span>
+    <span class="nx">constructor</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kr">super</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="nx">getUsers</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">REACT_APP_USERS_SERVICE_URL</span><span class="si">}</span><span class="sb">/users`</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
+      <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+      <span class="p">});</span>
+    <span class="p">}</span>
+    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span>
+          <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;container&quot;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;row&quot;</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;col-md-4&quot;</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="nx">br</span> <span class="o">/&gt;</span>
+                <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">All</span> <span class="nx">Users</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+                <span class="o">&lt;</span><span class="nx">hr</span> <span class="o">/&gt;&lt;</span><span class="nx">br</span> <span class="o">/&gt;</span>
+              <span class="o">&lt;</span><span class="err">/div&gt;</span>
+            <span class="o">&lt;</span><span class="err">/div&gt;</span>
+          <span class="o">&lt;</span><span class="err">/div&gt;</span>
+        <span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+  <span class="o">&lt;</span><span class="nx">App</span> <span class="o">/&gt;</span><span class="p">,</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+
+
+<p>当然不要忘记在顶部导入<code>axios</code>包哦~</p>
+<p>为了验证上面的功能，我们要先开启我们的服务端，打开一个新的终端窗口，然后定位到<code>flask-microservices-users</code>项目根目录，还记得前面的启动<code>docker-compose</code>的命令吗？</p>
+<div class="codehilite"><pre><span></span>$ docker-compose -f docker-compose.yml up -d
+</pre></div>
+
+
+<p>为了确保我们服务端的代码是正常工作的，我们还需要执行下我们的测试命令：</p>
+<div class="codehilite"><pre><span></span>$ docker-compose -f docker-compose.yml run users-service python manage.py <span class="nb">test</span>
+</pre></div>
+
+
+<p>测试通过后，我们回到<code>React</code>项目，从上面的代码中可以看出我们需要增加一个<code>process.env.REACT_APP_USERS_SERVICE_URL</code>的环境变量，首先杀掉<code>React</code>的服务(Ctrl + C)，然后执行下面的命令：</p>
+<div class="codehilite"><pre><span></span>$ <span class="nb">export</span> <span class="nv">REACT_APP_USERS_SERVICE_URL</span><span class="o">=</span>http://127.0.0.1:5001
+</pre></div>
+
+
+<blockquote>
+<p>注意所有的自定义的环境变量必须要已<code>REACT_APP_</code>开头，更多信息可以查看<a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-custom-environment-variables">官方文档</a></p>
+</blockquote>
+<p>现在为了验证<code>getUsers()</code>方法，我们可以在构造函数<code>constructor()</code>中先调用：</p>
+<div class="codehilite"><pre><span></span><span class="nx">constructor</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">super</span><span class="p">();</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">getUsers</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>这样当我们的<code>App</code>组件被实例化的时候就会调用<code>getUsers()</code>方法了。我们来运行命令：<code>npm start</code>打开我们的<code>React</code>应用，然后打开<a href="https://developer.chrome.com/devtools">Chrome 开发者工具</a>(强烈推荐把<strong>chrome</strong>浏览器设置为默认浏览器，这货对于前端开发者来说真的是神器，在页面右键选择审查元素即可打开)，然后打开<code>JavaScript Console</code>控制台，你将能看到下面的错误信息：
+<img alt="react error" src="../../img/posts/react-error1.png" />
+简单来说，就是我们正在发起一个<a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing">跨域</a>的<strong>AJAX</strong>请求(从<code>http://localhost:3000</code>到<code>http://127.0.0.1:5001</code>)，这是违反浏览器的<strong>同源策略</strong>的，所以该请求被拒绝了。幸运的时候我们可以通过<a href="https://flask-cors.readthedocs.io">Flask-CORS</a>扩展在服务端来处理跨域的请求。</p>
+<p>回到<strong>flaks-users-service</strong>的目录，增加<strong>Flask-CORS</strong>包在<code>requirements.txt</code>文件中：</p>
+<div class="codehilite"><pre><span></span>flask-cors==3.0.3
+</pre></div>
+
+
+<p>为方便我们开发调试，我们设置所有的请求都运行跨域操作(切记，生产环境绝对不能这样做)，更新<code>flaks-users-service/project/__init__.py</code>文件的<code>create_app()</code>方法：</p>
+<div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">flask_cors</span> <span class="kn">import</span> <span class="n">CORS</span>
+<span class="k">def</span> <span class="nf">create_app</span><span class="p">():</span>
+    <span class="c1"># 初始化应用</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+    <span class="c1"># 运行跨域</span>
+    <span class="n">CORS</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+
+    <span class="c1"># 环境配置</span>
+    <span class="n">app_settings</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;APP_SETTINGS&#39;</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">from_object</span><span class="p">(</span><span class="n">app_settings</span><span class="p">)</span>
+    <span class="c1"># 安装扩展</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">init_app</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+    <span class="c1"># 注册blueprint</span>
+    <span class="kn">from</span> <span class="nn">project.api.views</span> <span class="kn">import</span> <span class="n">users_blueprint</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">register_blueprint</span><span class="p">(</span><span class="n">users_blueprint</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">app</span>
+</pre></div>
+
+
+<p>不要忘记在文件的顶部导入<code>flask_cors</code>包：</p>
+<div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">flask_cors</span> <span class="kn">import</span> <span class="n">CORS</span>
+</pre></div>
+
+
+<p>由于我们新增了依赖包，所以我们需要重新构建我们的镜像：</p>
+<div class="codehilite"><pre><span></span>$ docker-compose -f docker-compose.yml up -d --build
+</pre></div>
+
+
+<p>然后更新、初始化数据库：</p>
+<div class="codehilite"><pre><span></span>$ docker-compose -f docker-compose.yml run users-service python manage.py recreate_db
+$ docker-compose -f docker-compose.yml run users-service python manage.py seed_db
+</pre></div>
+
+
+<p>然后将我们的<code>React</code>应用服务打开(<code>npm start</code>)，一样的操作在浏览器中打开<code>JavaScript Console</code>控制终端，这下我们应该可以看到正常的网络请求的打印结果：<code>console.log(res)</code>。
+<img alt="react console1" src="../../img/posts/react-console1.png" /></p>
+<p>我们前面在写获取用户列表的<code>API</code>的时候，返回的数据结构是这样的：</p>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="err">&#39;status&#39;:</span> <span class="err">&#39;success&#39;,</span>
+  <span class="err">&#39;data&#39;:</span> <span class="err">{</span>
+      <span class="err">&#39;users&#39;:</span> <span class="err">users_list</span>
+  <span class="p">}</span>
+<span class="err">}</span>
+</pre></div>
+
+
+<p>还记得吗(<code>project/api/views.py</code>文件中的<code>get_users</code>方法)？我们来更改<code>axios</code>获取成功后的打印语句，可以很方便的拿到用户列表数据：</p>
+<div class="codehilite"><pre><span></span><span class="nx">getUsers</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">REACT_APP_USERS_SERVICE_URL</span><span class="si">}</span><span class="sb">/users`</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">users</span><span class="p">);</span> <span class="p">})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">})</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>（想想为什么是<code>res.data.data.users</code>？）现在你可以在<strong>Javascript Console</strong>终端中看到两个用户对象的数组打印出来了：</p>
+<div class="codehilite"><pre><span></span><span class="p">[</span>
+  <span class="p">{</span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="s2">&quot;Sat, 13 Jan 2018 06:12:40 GMT&quot;</span><span class="p">,</span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="s2">&quot;qikqiak@gmail.com&quot;</span><span class="p">,</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="s2">&quot;cnych&quot;</span><span class="p">},</span>
+  <span class="p">{</span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="s2">&quot;Sat, 13 Jan 2018 06:12:40 GMT&quot;</span><span class="p">,</span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="s2">&quot;icnych@gmail.com&quot;</span><span class="p">,</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="s2">&quot;chyang&quot;</span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+
+
+<p>现在有个问题是，我们是在构造函数中调用的<code>getUsers()</code>方法，而构造函数<code>constructor()</code>是在组件被挂载到<code>DOM</code>之前调用的，如果<code>AJAX</code>请求在组件被挂载完成之前比预期花费了更多的时间会出现什么情况呢？这有可能会造成<strong>竞争危害</strong>，什么意思？就是页面上的数据可能现在能够渲染出来，另外一次又可能渲染不出来(因为这个时候数据在组件挂载完成后还没完成请求，明白了吗？)，这取决与我们的<code>AJAX</code>请求是否能够在组件挂载完成之前完成请求，对吧。不过不用担心，<code>React</code>定义了一系列的生命周期函数，可以很方便的来解决这个问题。</p>
+<h3 id="_4">组件声明周期<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>基于类的组件有一个特定的函数，它们在组件的生命周期各个阶段执行。这些函数被称作<strong>生命周期</strong>方法，我们可以先花点时间看看<a href="https://reactjs.org/docs/react-component.html#the-component-lifecycle">官方文档</a>来简单的学习下每个声明周期方法，看下这些方法都是在什么地方被调用的。
+简单总结下：方法中带有前缀<strong>will</strong>的在特定环节之前被调用，而带有前缀<strong>did</strong>的方法则会在特定环节之后被调用。</p>
+<h4 id="_5">挂载<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<p>下面这些方法会在组件实例被创建和插入<code>DOM</code>中时被调用：</p>
+<ul>
+<li>constructor()</li>
+<li>componentWillMount()：会在组件<code>render</code>之前执行，并且永远都只执行一次。</li>
+<li>render()</li>
+<li>componentDidMount()：会在组件加载完毕之后立即执行。这个时候组件已经生成了对应的<code>DOM</code>结构</li>
+</ul>
+<h4 id="_6">更新<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
+<p>属性或者状态的改变会触发一次更新。当一个组件在被重新渲染时，下面这些方法会被调用：</p>
+<ul>
+<li>componentWillReceiveProps()：在组件接收到一个新的<code>prop</code>时被执行</li>
+<li>shouldComponentUpdate()</li>
+<li>componentWillUpdate()</li>
+<li>render()</li>
+<li>componentDidUpdate()</li>
+</ul>
+<h4 id="_7">卸载<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
+<p>当一个组件从<code>DOM</code>中移除时，会调用下面的方法：</p>
+<ul>
+<li>componentWillUnmount()</li>
+</ul>
+<p>说了这么多，我们应该在哪个方法里面来做我们的网络请求呢？实际上<code>ES6</code>中的构造函数和<code>componentWillMount</code>函数是一致的，上面我们已经知道构造函数中执行网络请求甚至是所有的异步操作都不是好的选择，在<code>componentDidMount</code>函数中执行异步操作是最好的时机，可以通过<a href="https://daveceddia.com/where-fetch-data-componentwillmount-vs-componentdidmount/">Where to Fetch Data: componentWillMount vs componentDidMount</a>了解到原因。</p>
+<p>更改<code>client/src/index.js</code>代码，在<code>App</code>类中增加方法：</p>
+<div class="codehilite"><pre><span></span><span class="kr">class</span> <span class="nx">App</span> <span class="kr">extends</span> <span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">constructor</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kr">super</span><span class="p">();</span>
+  <span class="p">};</span>
+  <span class="nx">componentDidMount</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">getUsers</span><span class="p">();</span>
+  <span class="p">};</span>
+  <span class="nx">getUsers</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">REACT_APP_USERS_SERVICE_URL</span><span class="si">}</span><span class="sb">/users`</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">users</span><span class="p">);</span> <span class="p">})</span>
+    <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">})</span>
+  <span class="p">};</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;container&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;row&quot;</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;col-md-4&quot;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;</span>
+            <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">All</span> <span class="nx">Users</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+            <span class="o">&lt;</span><span class="nx">hr</span><span class="o">/&gt;&lt;</span><span class="nx">br</span><span class="o">/&gt;</span>
+          <span class="o">&lt;</span><span class="err">/div&gt;</span>
+        <span class="o">&lt;</span><span class="err">/div&gt;</span>
+      <span class="o">&lt;</span><span class="err">/div&gt;</span>
+    <span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+  <span class="o">&lt;</span><span class="nx">App</span> <span class="o">/&gt;</span><span class="p">,</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+
+
+<p>确保上面的<code>React</code>应用仍然能够正常工作</p>
+<h3 id="state">State（状态）<a class="headerlink" href="#state" title="Permanent link">&para;</a></h3>
+<p><code>state</code>是<code>React</code>中非常重要的一个概念，一个组件的显示形态可以由它的数据状态和配置参数来决定，一个组件可以拥有自己的状态，状态的改变可以让<code>React</code>高效的更新界面。
+现在我们为组件<code>App</code>增加一个<strong>users</strong>的状态数据，然后我们可以使用<code>setState()</code>方法来更新状态数据，更新<code>getUsers()</code>方法：</p>
+<div class="codehilite"><pre><span></span><span class="nx">getUsers</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">REACT_APP_USERS_SERVICE_URL</span><span class="si">}</span><span class="sb">/users`</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+        <span class="nx">users</span><span class="o">:</span> <span class="nx">res</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">users</span>
+    <span class="p">});</span>
+  <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>然后我们在构造函数中增加状态<code>users</code>：</p>
+<div class="codehilite"><pre><span></span><span class="nx">constructor</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kr">super</span><span class="p">();</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="nx">users</span><span class="o">:</span> <span class="p">[]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>我们可以看到，默认初始化的时候<code>users</code>数据是一个空数组，在<code>getUsers()</code>方法调用成功后，我们调用<code>setState()</code>方法更新了<code>users</code>状态。</p>
+<blockquote>
+<p>查看<a href="https://reactjs.org/docs/state-and-lifecycle.html#using-state-correctly">官方文档</a>学习正确的使用<code>state</code>。</p>
+</blockquote>
+<p>然后我们就可以更新<code>rendor()</code>方法来将状态数据渲染到页面中：</p>
+<div class="codehilite"><pre><span></span><span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;container&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;row&quot;</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;col-md-4&quot;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">br</span> <span class="o">/&gt;</span>
+            <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">All</span> <span class="nx">Users</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+            <span class="o">&lt;</span><span class="nx">hr</span> <span class="o">/&gt;&lt;</span><span class="nx">br</span> <span class="o">/&gt;</span>
+            <span class="p">{</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">users</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">user</span> <span class="p">=&gt;</span> <span class="p">{</span>
+                    <span class="k">return</span> <span class="p">(</span>
+                        <span class="o">&lt;</span><span class="nx">h4</span>
+                          <span class="nx">key</span><span class="o">=</span><span class="p">{</span> <span class="nx">user</span><span class="p">.</span><span class="nx">id</span> <span class="p">}</span>
+                          <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;well&quot;</span>
+                        <span class="o">&gt;</span><span class="p">{</span> <span class="nx">user</span><span class="p">.</span><span class="nx">username</span> <span class="p">}</span>
+                        <span class="o">&lt;</span><span class="err">/h4&gt;</span>
+                    <span class="p">)</span>
+                <span class="p">})</span>
+            <span class="p">}</span>
+          <span class="o">&lt;</span><span class="err">/div&gt;</span>
+        <span class="o">&lt;</span><span class="err">/div&gt;</span>
+      <span class="o">&lt;</span><span class="err">/div&gt;</span>
+    <span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>上面的<code>render()</code>函数：</p>
+<ul>
+<li>我们循环(用的<strong>ES6的map</strong>方法)<code>users</code>状态数据，每次循环中创建了一个新的<strong>H4</strong>元素，这也是为什么我们初始化的<code>users</code>是一个空数组的原因，避免初始化的时候出错。</li>
+<li>注意<strong>H4</strong>元素中我们增加了一个属性<code>key</code>：<code>React</code>通过该值来跟踪每一个元素，每个<code>key</code>对应一个组件，相同的<code>key</code><strong>React</strong>会认为是同一个组件，这样后续相同的<code>key</code>对应组件都不会被创建，简单的来说就是该属性是用来保证<code>React</code>高效的一个重要标识，在循环中一定要加上该属性。<a href="https://facebook.github.io/react/docs/lists-and-keys.html#keys">查看官方文档</a>了解更多关于<code>key</code>的概念。</li>
+</ul>
+<p>到这里，其实我们已经可以看到<code>React</code>应用的效果了，如下图：
+<img alt="react-app-index" src="../../img/posts/reactapp-index1.png" /></p>
+<h3 id="_8">组件<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p>我们知道<code>React</code>是一个组件化的库，我们这里可以将用户列表做成一个组件，这样其他任何地方要使用用户列表的话，只需要将这个组件引入就行了，是不是很方便~~~</p>
+<p>首先在<strong>src</strong>目录下面新建<strong>components</strong>目录，在该目录下新建文件：<em>UserList.jsx</em>：</p>
+<div class="codehilite"><pre><span></span><span class="kr">import</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">UserList</span> <span class="o">=</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+          <span class="p">{</span>
+            <span class="nx">props</span><span class="p">.</span><span class="nx">users</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">user</span> <span class="p">=&gt;</span> <span class="p">{</span>
+              <span class="k">return</span> <span class="p">(</span>
+                <span class="o">&lt;</span><span class="nx">h4</span>
+                  <span class="nx">key</span><span class="o">=</span><span class="p">{</span> <span class="nx">user</span><span class="p">.</span><span class="nx">id</span> <span class="p">}</span>
+                  <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;well&quot;</span>
+                <span class="o">&gt;</span><span class="p">{</span> <span class="nx">user</span><span class="p">.</span><span class="nx">username</span> <span class="p">}</span>
+                <span class="o">&lt;</span><span class="err">/h4&gt;</span>
+              <span class="p">)</span>
+            <span class="p">})</span>
+          <span class="p">}</span>
+        <span class="o">&lt;</span><span class="err">/div&gt;</span>
+    <span class="p">)</span>
+<span class="p">};</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">UserList</span><span class="p">;</span>
+</pre></div>
+
+
+<p>注意这里，为什么我们使用一个函数组件而不是基于类的组件呢？注意在该组件中我们使用<code>props</code>代替了<code>state</code>：</p>
+<ul>
+<li><code>Props</code>：数据通过<code>props</code>向下传递，是只读的</li>
+<li><code>State</code>：数据绑定到一个组件上，是可读写的</li>
+</ul>
+<blockquote>
+<p>可以查看文章<a href="http://lucybain.com/blog/2016/react-state-vs-pros/">ReactJS: Props vs. State</a>了解更多属性和状态的区别。</p>
+</blockquote>
+<p>限制基于类的（有状态）组件数量是一个好的习惯，因为它们可以操作状态，因为不太可预测，不太可控制。如果你只需要渲染数据（就像我们的<strong>UserList</strong>组件）,使用一个函数类的组件是一个更好的选择。</p>
+<p>现在我们需要在父组件中通过状态数据传递给子组件，首先在<code>index.js</code>文件中先引入我们的用户列表组件：</p>
+<div class="codehilite"><pre><span></span><span class="kr">import</span> <span class="nx">UserList</span> <span class="nx">from</span> <span class="s1">&#39;./components/UserList&#39;</span><span class="p">;</span>
+</pre></div>
+
+
+<p>然后更新<code>render()</code>方法：</p>
+<div class="codehilite"><pre><span></span><span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;container&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;row&quot;</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;col-md-4&quot;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">br</span> <span class="o">/&gt;</span>
+            <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">All</span> <span class="nx">Users</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+            <span class="o">&lt;</span><span class="nx">hr</span> <span class="o">/&gt;&lt;</span><span class="nx">br</span> <span class="o">/&gt;</span>
+            <span class="o">&lt;</span><span class="nx">UserList</span> <span class="nx">users</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">users</span><span class="p">}</span> <span class="o">/&gt;</span>
+          <span class="o">&lt;</span><span class="err">/div&gt;</span>
+        <span class="o">&lt;</span><span class="err">/div&gt;</span>
+      <span class="o">&lt;</span><span class="err">/div&gt;</span>
+    <span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>注意看上面是怎样引入用户列表组件的：<strong><UserList users={this.state.users} /></strong>，这样<code>App</code>组件将状态数据<code>users</code>通过属性的形式传递给了子组件<code>UserList</code>，然后子组件中通过属性<code>users</code>进行数据渲染，整个流程明白了吗？</p>
+<p>到这里请确保<code>React</code>应用能够正常的工作，在浏览器中打开<code>http://localhost:3000</code>能得到上面相同的结果，然后我们对我们的代码进行一些<code>Review</code>，然后提交到<code>github</code>上去。</p>
+                
+                  
+                
+              
+              
+                
+                  <h2 id="__comments">评论</h2>
+                  <div id="disqus_thread"></div>
+<script>
+  var disqus_config = function () {
+    this.page.url = "https://tdd.qikqiak.com/part2/react/";
+    this.page.identifier =
+      "part2/react/";
+  };
+  (function() {
+    var d = document, s = d.createElement("script");
+    s.src = "//tddqik.disqus.com/embed.js";
+    s.setAttribute("data-timestamp", +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+                
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../ci/" title="持续集成" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  后退
+                </span>
+                持续集成
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../test/" title="React 测试" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  前进
+                </span>
+                React 测试
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2017 - 2018 QikQiak LABS
+          </div>
+        
+        powered by
+        <a href="http://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+      <a href="https://github.com/cnych" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://twitter.com/cnych" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="https://facebook.com/cnych" class="md-footer-social__link fa fa-facebook"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.9fb73e57.js"></script>
+      
+        
+        
+          
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../assets/javascripts/lunr/lunr.jp.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"0.17.2",url:{base:"../.."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>

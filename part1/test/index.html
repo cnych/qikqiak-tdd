@@ -1,0 +1,808 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="本教程是一个关于Python微服务的实战教程，根据测试驱动开发(TDD)的指导思想，开发容器化的Python微服务应用，涉及TDD、Flask、React、Docker、微服务等知识点。">
+      
+      
+        <link rel="canonical" href="https://tdd.qikqiak.com/part1/test/">
+      
+      
+        <meta name="author" content="阳明">
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="jp">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.6.0">
+    
+    
+      
+        <title>测试 - Python微服务实战</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.aa3de92b.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.792431c1.css">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono">
+        <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://tdd.qikqiak.com/" title="Python微服务实战" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                Python微服务实战
+              </span>
+              <span class="md-header-nav__topic">
+                测试
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    <span class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </span>
+    Python微服务实战
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="首页" class="md-nav__link">
+      首页
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      第一部分
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        第一部分
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../introduction/" title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../start/" title="开始" class="md-nav__link">
+      开始
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../docker/" title="Docker 配置" class="md-nav__link">
+      Docker 配置
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../database/" title="数据库安装配置" class="md-nav__link">
+      数据库安装配置
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+    
+    <a href="./" title="测试" class="md-nav__link md-nav__link--active">
+      测试
+    </a>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../flask-blueprint/" title="Flask Blueprint" class="md-nav__link">
+      Flask Blueprint
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../deploy/" title="部署" class="md-nav__link">
+      部署
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../jinjia/" title="Jinjia 模板" class="md-nav__link">
+      Jinjia 模板
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      第二部分
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        第二部分
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part2/introduction/" title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part2/coverage/" title="代码覆盖" class="md-nav__link">
+      代码覆盖
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part2/lint/" title="代码质量" class="md-nav__link">
+      代码质量
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part2/ci/" title="持续集成" class="md-nav__link">
+      持续集成
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part2/react/" title="React 应用" class="md-nav__link">
+      React 应用
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part2/test/" title="React 测试" class="md-nav__link">
+      React 测试
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part2/form/" title="React 表单" class="md-nav__link">
+      React 表单
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part2/docker/" title="容器化 React 应用" class="md-nav__link">
+      容器化 React 应用
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      第三部分
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        第三部分
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../part3/introduction/" title="介绍" class="md-nav__link">
+      介绍
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../about/" title="关于" class="md-nav__link">
+      关于
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>测试</h1>
+                
+                <p>按照我们平时的开发习惯，是不是接下来就应该开发业务代码了？当然这样是可以的，但是我们这里不这样做，我们让测试先行，让测试来驱动开发，这样有什么好处呢？<code>TDD</code>最重要的功能就是保障代码的正确性，能够迅速发现、定位<code>bug</code>。关于<code>TDD</code>更多的知识可以自行<code>Google</code>。提供一个篇<strong>IBM</strong>关于<code>TDD</code>介绍的文章：<a href="https://www.ibm.com/developerworks/cn/linux/l-tdd/">浅谈测试驱动开发（TDD）</a></p>
+<p>首先新增测试用的依赖包：<code>Flask-Testing</code>到<code>requirements.txt</code>文件下面（记得用<code>pip</code>命令安装哦~）：</p>
+<div class="codehilite"><pre><span></span>Flask-Testing==0.7.1
+</pre></div>
+
+
+<p>在<code>project</code>目录下面新建一个<code>tests</code>的目录，然后在该目录使用下面新增几个文件：</p>
+<div class="codehilite"><pre><span></span><span class="o">(</span>tdd3<span class="o">)</span>$ touch __init__.py base.py test_config.py test_users.py
+</pre></div>
+
+
+<p>如果你对<code>Flask-Testing</code>还不太熟悉，在编写测试文件之前，可以先简单查<a href="https://flask-testing.readthedocs.io/en/latest/">看下文档</a>。</p>
+<p>更新<code>base.py</code>文件：</p>
+<div class="codehilite"><pre><span></span><span class="c1"># project/tests/base.py</span>
+<span class="kn">from</span> <span class="nn">flask_testing</span> <span class="kn">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">project</span> <span class="kn">import</span> <span class="n">app</span><span class="p">,</span> <span class="n">db</span>
+
+<span class="k">class</span> <span class="nc">BaseTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">create_app</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">from_object</span><span class="p">(</span><span class="s1">&#39;project.config.TestingConfig&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">app</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">create_all</span><span class="p">()</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">drop_all</span><span class="p">()</span>
+</pre></div>
+
+
+<p>首先，我们确保测试使用的数据库<code>URI</code>不是生产环境的，避免对线上环境产生任何影响。每次测试的时候创建数据表、完成后删除表，确保能够清理测试数据。</p>
+<blockquote>
+<p>必须指定一个create_app 方法，并且返回flask app 实例，如果没有定义将会抛出<strong>NotImplementedError</strong>异常。</p>
+</blockquote>
+<p>另外在<code>tearDown</code>方法中增加<code>db.session.remove()</code>方法，这样能够确保每次测试完成的时候能够将<code>SQLAlchemy</code>的<strong>session</strong>属性移除掉，在下一次测试的时候始终是一个新的<strong>session</strong>。</p>
+<p>更新<code>test_config.py</code>文件：</p>
+<div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">current_app</span>
+<span class="kn">from</span> <span class="nn">flask_testing</span> <span class="kn">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">project</span> <span class="kn">import</span> <span class="n">app</span>
+
+<span class="k">class</span> <span class="nc">TestDevelopmentConfig</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">create_app</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">from_object</span><span class="p">(</span><span class="s1">&#39;project.config.DevelopmentConfig&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">app</span>
+
+    <span class="k">def</span> <span class="nf">test_app_is_development</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;SECRET_KEY&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;secret&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;DEBUG&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">current_app</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span>
+            <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;SQLALCHEMY_DATABASE_URI&#39;</span><span class="p">]</span> <span class="o">==</span>
+            <span class="s1">&#39;mysql+pymysql://root:root321@users-db:3306/users_dev&#39;</span>
+        <span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">TestTestingConfig</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">create_app</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">from_object</span><span class="p">(</span><span class="s1">&#39;project.config.TestingConfig&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">app</span>
+
+    <span class="k">def</span> <span class="nf">test_app_is_testing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;SECRET_KEY&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;secret&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;DEBUG&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;TESTING&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;PRESERVE_CONTEXT_ON_EXCEPTION&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span>
+            <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;SQLALCHEMY_DATABASE_URI&#39;</span><span class="p">]</span> <span class="o">==</span>
+            <span class="s1">&#39;mysql+pymysql://root:root321@users-db:3306/users_test&#39;</span>
+        <span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">TestProductionConfig</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">create_app</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">from_object</span><span class="p">(</span><span class="s1">&#39;project.config.ProductionConfig&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">app</span>
+
+    <span class="k">def</span> <span class="nf">test_app_is_production</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;SECRET_KEY&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;secret&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;DEBUG&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;TESTING&#39;</span><span class="p">])</span>
+</pre></div>
+
+
+<p>更新<code>test_users.py</code>文件：</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">project.tests.base</span> <span class="kn">import</span> <span class="n">BaseTestCase</span>
+
+<span class="k">class</span> <span class="nc">TestUserService</span><span class="p">(</span><span class="n">BaseTestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">test_users</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;确保ping的服务正常.&quot;&quot;&quot;</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/ping&#39;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;pong&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;success&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">])</span>
+</pre></div>
+
+
+<p>然后我们在<code>manage.py</code>中新增一个测试的命令行支持：</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">flask_script</span> <span class="kn">import</span> <span class="n">Manager</span>
+<span class="kn">from</span> <span class="nn">project</span> <span class="kn">import</span> <span class="n">app</span><span class="p">,</span> <span class="n">db</span>
+
+<span class="n">manager</span> <span class="o">=</span> <span class="n">Manager</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+
+<span class="nd">@manager.command</span>
+<span class="k">def</span> <span class="nf">recreate_db</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;重新创建数据表.&quot;&quot;&quot;</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">drop_all</span><span class="p">()</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">create_all</span><span class="p">()</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+<span class="nd">@manager.command</span>
+<span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;运行测试.&quot;&quot;&quot;</span>
+    <span class="n">tests</span> <span class="o">=</span> <span class="n">unittest</span><span class="o">.</span><span class="n">TestLoader</span><span class="p">()</span><span class="o">.</span><span class="n">discover</span><span class="p">(</span><span class="s1">&#39;project/tests&#39;</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s1">&#39;test_*.py&#39;</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">unittest</span><span class="o">.</span><span class="n">TextTestRunner</span><span class="p">(</span><span class="n">verbosity</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tests</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">wasSuccessful</span><span class="p">():</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="mi">1</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">manager</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+
+<p><code>unittest</code>支持非常简单的测试发现，为了兼容测试发现，所有的测试文件(test_xxx.py)必须是可以从项目的顶级目录导入的包或者模块，我们这里就是利用<code>TestLoader.discover()</code>方法去发现<strong>project/tests</strong>包下面的所有的<strong>test_xxx.py</strong>测试文件。然后使用<strong>TextTestRunner</strong>用来执行测试用例，对测试进行编排并把结果返回给用户。</p>
+<p>如果是单个的测试文件，推荐你将所有的测试方法放在同一个文件中，这样能够方便的使用<code>unittest.main()</code>方法执行：</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">flask_testing</span>
+
+<span class="c1"># TODO your test cases</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+
+<p>然后可以执行命令<strong>python test_xxx.py</strong>进行测试。</p>
+<p>由于我们这里有<code>test_config.py</code>和<code>test_users.py</code>两个业务不一样的测试用例，所以我们使用<code>test runner</code>来收集所有的测试结果并生成最后的测试报告。</p>
+<p>由于我们更新了依赖包，所以需要重新构建镜像：</p>
+<div class="codehilite"><pre><span></span><span class="o">(</span>tdd3<span class="o">)</span>$ docker-compose up -d --build
+</pre></div>
+
+
+<p>然后运行测试命令：</p>
+<div class="codehilite"><pre><span></span><span class="o">(</span>tdd3<span class="o">)</span>$ docker-compose run users-service python manage.py <span class="nb">test</span>
+</pre></div>
+
+
+<p>然后我们可以看到类似于下面的测试没有通过的提示信息：</p>
+<div class="codehilite"><pre><span></span><span class="o">======================================================================</span>
+FAIL: test_app_is_development <span class="o">(</span>test_config.TestDevelopmentConfig<span class="o">)</span>
+----------------------------------------------------------------------
+Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+  File <span class="s2">&quot;/usr/src/app/project/tests/test_config.py&quot;</span>, line <span class="m">13</span>, in test_app_is_development
+    self.assertTrue<span class="o">(</span>app.config<span class="o">[</span><span class="s1">&#39;SECRET_KEY&#39;</span><span class="o">]</span> <span class="o">==</span> <span class="s1">&#39;secret&#39;</span><span class="o">)</span>
+AssertionError: False is not <span class="nb">true</span>
+</pre></div>
+
+
+<p>这是因为我们的<code>app.config</code>中还没有<strong>SECRET_KEY</strong>这个key，所以<code>assertTrue</code>肯定是不会通过的，然后我们在<code>config.py</code>的<strong>BaseConfig</strong>类中新增<strong>SECRET_KEY</strong>属性：</p>
+<div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">BaseConfig</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;基础配置&quot;&quot;&quot;</span>
+    <span class="n">DEBUG</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">TESTING</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">SQLALCHEMY_TRACK_MODIFICATIONS</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s1">&#39;secret&#39;</span>
+</pre></div>
+
+
+<p>重新执行测试命令：</p>
+<div class="codehilite"><pre><span></span><span class="o">(</span>tdd3<span class="o">)</span>$ docker-compose run users-service python manage.py <span class="nb">test</span>
+Starting users-db ... <span class="k">done</span>
+test_app_is_development <span class="o">(</span>test_config.TestDevelopmentConfig<span class="o">)</span> ... ok
+test_app_is_production <span class="o">(</span>test_config.TestProductionConfig<span class="o">)</span> ... ok
+test_app_is_testing <span class="o">(</span>test_config.TestTestingConfig<span class="o">)</span> ... ok
+test_users <span class="o">(</span>test_users.TestUserService<span class="o">)</span>
+确保ping的服务正常. ... ok
+
+----------------------------------------------------------------------
+Ran <span class="m">4</span> tests in <span class="m">0</span>.124s
+
+OK
+</pre></div>
+
+
+<p>测试通过~~~</p>
+                
+                  
+                
+              
+              
+                
+                  <h2 id="__comments">评论</h2>
+                  <div id="disqus_thread"></div>
+<script>
+  var disqus_config = function () {
+    this.page.url = "https://tdd.qikqiak.com/part1/test/";
+    this.page.identifier =
+      "part1/test/";
+  };
+  (function() {
+    var d = document, s = d.createElement("script");
+    s.src = "//tddqik.disqus.com/embed.js";
+    s.setAttribute("data-timestamp", +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+                
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../database/" title="数据库安装配置" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  后退
+                </span>
+                数据库安装配置
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../flask-blueprint/" title="Flask Blueprint" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  前进
+                </span>
+                Flask Blueprint
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2017 - 2018 QikQiak LABS
+          </div>
+        
+        powered by
+        <a href="http://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+      <a href="https://github.com/cnych" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://twitter.com/cnych" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="https://facebook.com/cnych" class="md-footer-social__link fa fa-facebook"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.9fb73e57.js"></script>
+      
+        
+        
+          
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../assets/javascripts/lunr/lunr.jp.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"0.17.2",url:{base:"../.."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>
