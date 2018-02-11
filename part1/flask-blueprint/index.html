@@ -705,7 +705,10 @@ OK
 
 
 <p>我们现在来执行测试肯定是不会通过的，因为路由<code>/users</code>还没实现的，所以接着我们在<code>project/api/views.py</code>中新增一个<code>/users</code>的处理方法：</p>
-<div class="codehilite"><pre><span></span><span class="nd">@users_blueprint.route</span><span class="p">(</span><span class="s1">&#39;/users&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<div class="codehilite"><pre><span></span><span class="c1"># 注意要导入request</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Blueprint</span><span class="p">,</span> <span class="n">jsonify</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">render_template</span>
+
+<span class="nd">@users_blueprint.route</span><span class="p">(</span><span class="s1">&#39;/users&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">add_user</span><span class="p">():</span>
     <span class="c1"># 获取POST的数据</span>
     <span class="n">post_data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">()</span>
