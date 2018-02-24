@@ -514,6 +514,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_3" title="生产环境" class="md-nav__link">
+    生产环境
+  </a>
+  
+</li>
+      
       
       
         <li class="md-nav__item">
@@ -610,6 +617,13 @@
         <li class="md-nav__item">
   <a href="#_2" title="本地开发环境" class="md-nav__link">
     本地开发环境
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="生产环境" class="md-nav__link">
+    生产环境
   </a>
   
 </li>
@@ -743,7 +757,7 @@ drwxr-xr-x  <span class="m">9</span> ych  staff   <span class="m">288</span> <sp
     <span class="l l-Scalar l-Scalar-Plain">build</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./services/nginx</span>
     <span class="l l-Scalar l-Scalar-Plain">restart</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">always</span>
     <span class="l l-Scalar l-Scalar-Plain">ports</span><span class="p p-Indicator">:</span>
-      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">80:80</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">8080:80</span>
     <span class="l l-Scalar l-Scalar-Plain">depends_on</span><span class="p p-Indicator">:</span>
       <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">users-service</span>
     <span class="l l-Scalar l-Scalar-Plain">links</span><span class="p p-Indicator">:</span>
@@ -775,7 +789,7 @@ users-service    <span class="p">|</span> <span class="m">172</span>.18.0.1 - - 
 <p>如果一切正常，上面的测试也会正常通过的。</p>
 <h3 id="_2">本地开发环境<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
 <p>在<code>services/client</code>目录下面添加<code>Dockerfile-dev</code>文件：</p>
-<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">FROM node:latest</span>
+<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">FROM node:9.4</span>
 <span class="l l-Scalar l-Scalar-Plain">MAINTAINER &quot;qikqiak@gmail.com&quot;</span>
 
 <span class="l l-Scalar l-Scalar-Plain"># 设置工作目录</span>
@@ -791,7 +805,7 @@ users-service    <span class="p">|</span> <span class="m">172</span>.18.0.1 - - 
 <span class="l l-Scalar l-Scalar-Plain">RUN npm install react-scripts@1.0.17 -g --silent</span>
 
 <span class="l l-Scalar l-Scalar-Plain"># 启动应用</span>
-<span class="l l-Scalar l-Scalar-Plain">CMD [&quot;npm start&quot;]</span>
+<span class="l l-Scalar l-Scalar-Plain">CMD [&quot;npm&quot;, &quot;start&quot;]</span>
 </pre></div>
 
 
@@ -831,7 +845,6 @@ users-service    <span class="p">|</span> <span class="m">172</span>.18.0.1 - - 
 
 
 <p>测试通过后，我们可以在本地浏览器中打开<code>http://127.0.0.1:3007</code>访问 React 应用了，当然如果测试没通过的话，我们得根据错误信息去修复我们的测试代码，直到测试通过为止。</p>
-<p>What happens if you navigate to the main route? Since we're still routing traffic to the Flask app (via Nginx), you will see the old app, served up with server-side templating. We need to update the Nginx configuration to route traffic to that main route to the React app.</p>
 <p>更新<code>services/nginx/flask.conf</code>配置：</p>
 <div class="codehilite"><pre><span></span><span class="k">server</span> <span class="p">{</span>
   <span class="kn">listen</span> <span class="mi">80</span><span class="p">;</span>
@@ -868,7 +881,7 @@ users-service    <span class="p">|</span> <span class="m">172</span>.18.0.1 - - 
   <span class="l l-Scalar l-Scalar-Plain">build</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./services/nginx</span>
   <span class="l l-Scalar l-Scalar-Plain">restart</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">always</span>
   <span class="l l-Scalar l-Scalar-Plain">ports</span><span class="p p-Indicator">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">80:80</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">8080:80</span>
   <span class="l l-Scalar l-Scalar-Plain">depends_on</span><span class="p p-Indicator">:</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">users-service</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">client</span>
@@ -882,14 +895,143 @@ users-service    <span class="p">|</span> <span class="m">172</span>.18.0.1 - - 
 </pre></div>
 
 
-<p>容器启动完成后，打开浏览器测试下我们的服务：</p>
-<ul>
-<li>http://127.0.0.1</li>
-<li>http://127.0.0.1/users</li>
-</ul>
 <blockquote>
-<p>TODO ......</p>
+<p>注意我们这里用的主机端口为8080，因为我们<strong>本机的80端口已经被占用</strong>，在实际线上部署的时候应该用80端口，然后再根据域名进行匹配进行测试。</p>
 </blockquote>
+<p>容器启动完成后，打开浏览器测试下我们的服务，确保下面的两个请求都是正常的：</p>
+<ul>
+<li>http://127.0.0.1:8080</li>
+<li>http://127.0.0.1:8080/users</li>
+</ul>
+<p>我们可以通过下面的命令查看运行中的容器日志：</p>
+<div class="codehilite"><pre><span></span>$ docker-compose -f docker-compose.yml logs -f
+</pre></div>
+
+
+<p>然后我们可以改变下 App 组件的 state 对象：</p>
+<div class="codehilite"><pre><span></span><span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">users</span><span class="o">:</span> <span class="p">[],</span>
+  <span class="nx">username</span><span class="o">:</span> <span class="s1">&#39;test001&#39;</span><span class="p">,</span>
+  <span class="nx">email</span><span class="o">:</span> <span class="s1">&#39;&#39;</span>
+<span class="p">};</span>
+</pre></div>
+
+
+<p>当我们保存的时候可以看到日志中输出了编译成功的信息，而且这个时候浏览器也自动刷新了，并且将 test001 填充在了用户名的输入框中。
+<img alt="change state" src="../../img/posts/WX20180224-170838.png" />
+当然测试过后，要记得将上面的 state 对象的值更改回去哦~</p>
+<h3 id="_3">生产环境<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>在将 React 应用上到生产环境之前我们需要将应用进行打包构建用于生成一系列的静态文件，我们在<code>services/client</code>目录下面的<code>package.json</code>文件中可以看到有一个<code>build</code>的脚本，该脚本就是用于我们对 React 应用进行打包的，在该目录下面执行命令：</p>
+<div class="codehilite"><pre><span></span>$ npm run build
+
+&gt; client@0.1.0 build /Users/ych/devs/workspace/yidianzhishi/tdd100/flask-microservices-users/services/client
+&gt; react-scripts build
+
+Creating an optimized production build...
+Compiled successfully.
+</pre></div>
+
+
+<p>构建完成后我们可以发现在该目录下面多了一个<strong>build</strong>的目录，该目录下面打包过后的静态资源文件。我们需要一个静态服务器来访问这些静态资源，执行下面的命令：</p>
+<div class="codehilite"><pre><span></span>$ npm install -g serve
+$ serve -s build
+   ┌──────────────────────────────────────────────────┐
+   │                                                  │
+   │   Serving!                                       │
+   │                                                  │
+   │   - Local:            http://localhost:5000      │
+   │   - On Your Network:  http://192.168.31.9:5000   │
+   │                                                  │
+   │   Copied <span class="nb">local</span> address to clipboard!             │
+   │                                                  │
+   └──────────────────────────────────────────────────┘
+</pre></div>
+
+
+<p>我们可以根据上面的提示访问<code>http://localhost:5000</code>，然后我们可以在进行一次相关的测试，确保没有任何错误。</p>
+<p>然后在<code>client</code>的根目录下面新增一个用于生产环境的 Dockerfile 文件：(<strong>Dockerfile-prod</strong>)</p>
+<div class="codehilite"><pre><span></span><span class="c"># build environment</span>
+<span class="k">FROM</span><span class="s"> node:9.4 as builder</span>
+<span class="k">RUN</span> mkdir /usr/src/app
+<span class="k">WORKDIR</span><span class="s"> /usr/src/app</span>
+<span class="k">ENV</span><span class="s"> PATH /usr/src/app/node_modules/.bin:$PATH</span>
+ARG REACT_APP_USERS_SERVICE_URL
+ARG NODE_ENV
+<span class="k">ENV</span><span class="s"> NODE_ENV $NODE_ENV</span>
+<span class="k">ENV</span><span class="s"> REACT_APP_USERS_SERVICE_URL $REACT_APP_USERS_SERVICE_URL</span>
+COPY package.json /usr/src/app/package.json
+<span class="k">RUN</span> npm install --silent
+<span class="k">RUN</span> npm install react-scripts@1.1.0 -g --silent
+COPY . /usr/src/app
+<span class="k">RUN</span> npm run build
+
+<span class="c"># production environment</span>
+<span class="k">FROM</span><span class="s"> nginx:1.13.5-alpine</span>
+COPY --from<span class="o">=</span>builder /usr/src/app/build /usr/share/nginx/html
+<span class="k">EXPOSE</span><span class="s"> 80</span>
+<span class="k">CMD</span><span class="s"> [&quot;nginx&quot;, &quot;-g&quot;, &quot;daemon off;&quot;]</span>
+</pre></div>
+
+
+<p>我们可以看到上面的<code>Dockerfile</code>文件和之前的不太一样，出现了两个基础镜像，这是<code>Docker</code>提供的多阶段构建功能，详细的可以参考我之前的一篇博文：<a href="https://blog.qikqiak.com/post/multi-stage-build-for-docker/">Docker 的多阶段构建</a>。</p>
+<p>当构建镜像的时候，参数通过<code>ARG</code>指令传递给<code>Dockerfile</code>，然后就可以将其用做环境变量。<code>npm run build</code>命令将生成静态文件，然后通过<strong>Nginx</strong>暴露80端口提供服务。</p>
+<p>接下来我们不使用<code>Docker Compose</code>来进行一些简单的测试。首先，在<code>services/client</code>目录下面构建镜像，记得使用<code>--build-arg</code>标记来传递合适的参数：</p>
+<div class="codehilite"><pre><span></span>$ docker build -f Dockerfile-prod -t <span class="s2">&quot;test&quot;</span> ./ --build-arg <span class="nv">NODE_ENV</span><span class="o">=</span>development --build-arg <span class="nv">REACT_APP_USERS_SERVICE_URL</span><span class="o">=</span>http://127.0.0.1:5001
+</pre></div>
+
+
+<blockquote>
+<p>记得将上面的<strong>REACT_APP_USERS_SERVICE_URL</strong>替换成你自己的实际的 IP。</p>
+</blockquote>
+<p>上面的构建命令是用<code>services/client</code>下面的<code>Dockerfile-prod</code>文件来构建一个叫 test 的镜像。</p>
+<p>镜像构建完成后我们使用上面的 test 镜像来启动一个名为 test01 的容器，将主机的9000端口映射到容器的80端口：</p>
+<div class="codehilite"><pre><span></span>$ docker run --name test01 -d -p <span class="m">9000</span>:80 <span class="nb">test</span>
+</pre></div>
+
+
+<p>容器启动成功后，我们可以在浏览器中打开链接<a href="http://localhost:9000/">http://localhost:9000/</a>来进行相关的测试。
+然后我们可以停止容器：</p>
+<div class="codehilite"><pre><span></span>$ docker stop test01
+$ docker rm test01
+</pre></div>
+
+
+<p>最好，删除上面的镜像：</p>
+<div class="codehilite"><pre><span></span>$ docker rmi <span class="nb">test</span>
+</pre></div>
+
+
+<p>上面我们对<code>Dockerfile-prod</code>进行了相关的设置和测试，现在我们将该服务添加到<code>docker-compose-prod.yml</code>：</p>
+<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">client</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">container_name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">client</span>
+  <span class="l l-Scalar l-Scalar-Plain">build</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">context</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./services/client</span>
+    <span class="l l-Scalar l-Scalar-Plain">dockerfile</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Dockerfile-prod</span>
+    <span class="l l-Scalar l-Scalar-Plain">args</span><span class="p p-Indicator">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">NODE_ENV=production</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">REACT_APP_USERS_SERVICE_URL=${REACT_APP_USERS_SERVICE_URL}</span>
+  <span class="l l-Scalar l-Scalar-Plain">ports</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="s">&#39;3007:80&#39;</span>
+  <span class="l l-Scalar l-Scalar-Plain">depends_on</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">users</span>
+  <span class="l l-Scalar l-Scalar-Plain">links</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">users</span>
+</pre></div>
+
+
+<p>注意这里我们使用的是<code>args</code>，而不是环境变量了。另外，我们的这个 client 服务需要在 nginx 服务启动之前启动，所以我们相应的更新<strong>docker-compose-prod.yml</strong>：</p>
+<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">nginx</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">container_name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx</span>
+  <span class="l l-Scalar l-Scalar-Plain">build</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./services/nginx</span>
+  <span class="l l-Scalar l-Scalar-Plain">restart</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">always</span>
+  <span class="l l-Scalar l-Scalar-Plain">ports</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">80:80</span>
+  <span class="l l-Scalar l-Scalar-Plain">depends_on</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">users</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">client</span>
+</pre></div>
+
+
 <p>扫描下面的二维码(或微信搜索<code>iEverything</code>)添加我微信好友(注明<code>python</code>)，然后可以加入到我们的<code>python</code>讨论群里面共同学习
 <img alt="qrcode" src="../../img/posts/wexin-qrcode.jpeg" /></p>
                 
