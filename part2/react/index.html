@@ -498,33 +498,6 @@
     组件声明周期
   </a>
   
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_5" title="挂载" class="md-nav__link">
-    挂载
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_6" title="更新" class="md-nav__link">
-    更新
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_7" title="卸载" class="md-nav__link">
-    卸载
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -535,7 +508,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_8" title="组件" class="md-nav__link">
+  <a href="#_5" title="组件" class="md-nav__link">
     组件
   </a>
   
@@ -689,33 +662,6 @@
     组件声明周期
   </a>
   
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_5" title="挂载" class="md-nav__link">
-    挂载
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_6" title="更新" class="md-nav__link">
-    更新
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_7" title="卸载" class="md-nav__link">
-    卸载
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -726,7 +672,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_8" title="组件" class="md-nav__link">
+  <a href="#_5" title="组件" class="md-nav__link">
     组件
   </a>
   
@@ -1012,7 +958,8 @@ $ docker-compose -f docker-compose.yml run users-service python manage.py seed_d
 <h3 id="_4">组件声明周期<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
 <p>基于类的组件有一个特定的函数，它们在组件的生命周期各个阶段执行。这些函数被称作<strong>生命周期</strong>方法，我们可以先花点时间看看<a href="https://reactjs.org/docs/react-component.html#the-component-lifecycle">官方文档</a>来简单的学习下每个声明周期方法，看下这些方法都是在什么地方被调用的。
 简单总结下：方法中带有前缀<strong>will</strong>的在特定环节之前被调用，而带有前缀<strong>did</strong>的方法则会在特定环节之后被调用。</p>
-<h4 id="_5">挂载<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<div class="admonition info">
+<p class="admonition-title">挂载</p>
 <p>下面这些方法会在组件实例被创建和插入<code>DOM</code>中时被调用：</p>
 <ul>
 <li>constructor()</li>
@@ -1020,7 +967,9 @@ $ docker-compose -f docker-compose.yml run users-service python manage.py seed_d
 <li>render()</li>
 <li>componentDidMount()：会在组件加载完毕之后立即执行。这个时候组件已经生成了对应的<code>DOM</code>结构</li>
 </ul>
-<h4 id="_6">更新<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
+</div>
+<div class="admonition info">
+<p class="admonition-title">更新</p>
 <p>属性或者状态的改变会触发一次更新。当一个组件在被重新渲染时，下面这些方法会被调用：</p>
 <ul>
 <li>componentWillReceiveProps()：在组件接收到一个新的<code>prop</code>时被执行</li>
@@ -1029,11 +978,14 @@ $ docker-compose -f docker-compose.yml run users-service python manage.py seed_d
 <li>render()</li>
 <li>componentDidUpdate()</li>
 </ul>
-<h4 id="_7">卸载<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
+</div>
+<div class="admonition info">
+<p class="admonition-title">卸载</p>
 <p>当一个组件从<code>DOM</code>中移除时，会调用下面的方法：</p>
 <ul>
 <li>componentWillUnmount()</li>
 </ul>
+</div>
 <p>说了这么多，我们应该在哪个方法里面来做我们的网络请求呢？实际上<code>ES6</code>中的构造函数和<code>componentWillMount</code>函数是一致的，上面我们已经知道构造函数中执行网络请求甚至是所有的异步操作都不是好的选择，在<code>componentDidMount</code>函数中执行异步操作是最好的时机，可以通过<a href="https://daveceddia.com/where-fetch-data-componentwillmount-vs-componentdidmount/">Where to Fetch Data: componentWillMount vs componentDidMount</a>了解到原因。</p>
 <p>更改<code>client/src/index.js</code>代码，在<code>App</code>类中增加方法：</p>
 <div class="codehilite"><pre><span></span><span class="kr">class</span> <span class="nx">App</span> <span class="kr">extends</span> <span class="nx">Component</span> <span class="p">{</span>
@@ -1135,7 +1087,7 @@ $ docker-compose -f docker-compose.yml run users-service python manage.py seed_d
 </ul>
 <p>到这里，其实我们已经可以看到<code>React</code>应用的效果了，如下图：
 <img alt="react-app-index" src="../../img/posts/reactapp-index1.png" /></p>
-<h3 id="_8">组件<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<h3 id="_5">组件<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
 <p>我们知道<code>React</code>是一个组件化的库，我们这里可以将用户列表做成一个组件，这样其他任何地方要使用用户列表的话，只需要将这个组件引入就行了，是不是很方便~~~</p>
 <p>首先在<strong>src</strong>目录下面新建<strong>components</strong>目录，在该目录下新建文件：<em>UserList.jsx</em>：</p>
 <div class="codehilite"><pre><span></span><span class="kr">import</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
